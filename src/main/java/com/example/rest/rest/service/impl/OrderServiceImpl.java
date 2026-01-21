@@ -51,15 +51,4 @@ public class OrderServiceImpl implements OrderService {
     public void deleteByIdIn(List<Long> ids) {
         orderRepository.deleteByIdIn(ids);
     }
-
-    private void checkForUpdate(Long orderId) {
-        Order currentOrder = findById(orderId);
-        Instant now = Instant.now();
-
-        Duration duration = Duration.between(currentOrder.getUpdatedAt(), now);
-
-        if (duration.getSeconds() > 5) {
-            throw new UpdateStateException("Can't update order");
-        }
-    }
 }
